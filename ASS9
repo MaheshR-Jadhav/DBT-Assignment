@@ -1,0 +1,78 @@
+                                                              //Assignment – 9//
+                                                      Querying Multiple Tables at Once.
+1) Write a query that lists each order number followed by the name of the customer who made the order.
+
+	ANS:-
+		mysql> SELECT Onum,Cname FROM ORDERS o,CUSTOMERS c WHERE o.Cnum=c.Cnum;
++------+----------+
+| Onum | Cname    |
++------+----------+
+| 3003 | Hoffman  |
+| 3009 | Giovanni |
+| 3005 | Liu      |
+| 3007 | Grass    |
+| 3010 | Grass    |
+| 3008 | Clemens  |
+| 3011 | Clemens  |
+| 3002 | pereira  |
+| 3001 | Cisneros |
+| 3006 | Cisneros |
++------+----------+
+
+2) Write a query that gives the names of both the salesperson and the customer for each order along with the order number.
+
+	ANS:-
+		mysql> SELECT Sname,Cname,Onum FROM ORDERS o,CUSTOMERS c,SALESPEOPLE s WHERE o.Snum=c.Snum AND o.Snum=s.Snum;
++---------+----------+------+
+| Sname   | Cname    | Onum |
++---------+----------+------+
+| Peel    | Hoffman  | 3003 |
+| Peel    | Hoffman  | 3008 |
+| Peel    | Hoffman  | 3011 |
+| Axelrod | Giovanni | 3009 |
+| Serres  | Liu      | 3005 |
+| Serres  | Liu      | 3007 |
+| Serres  | Liu      | 3010 |
+| Serres  | Grass    | 3005 |
+| Serres  | Grass    | 3007 |
+| Serres  | Grass    | 3010 |
+| Peel    | Clemens  | 3003 |
+| Peel    | Clemens  | 3008 |
+| Peel    | Clemens  | 3011 |
+| Motika  | pereira  | 3002 |
+| Rifkin  | Cisneros | 3001 |
+| Rifkin  | Cisneros | 3006 |
++---------+----------+------+
+
+3) Write a query that produces all customers serviced by salespeople with a commission above 12%. Output the customer’s name, the salesperson’s name, and the salesperson’s rate of commission.
+
+	ANS:-
+		mysql> SELECT Cname,s.Snum,Comm*100 "RATE OF COMM." FROM CUSTOMERS c,SALESPEOPLE s WHERE c.Snum=s.Snum AND Comm>.12;
++----------+------+---------------+
+| Cname    | Snum | RATE OF COMM. |
++----------+------+---------------+
+| Liu      | 1002 |         13.00 |
+| Grass    | 1002 |         13.00 |
+| Cisneros | 1007 |         15.00 |
++----------+------+---------------+
+
+4) Write a query that calculates the amount of the salesperson’s commission on each
+order by a customer with a rating above 100.
+
+	ANS:-
+		mysql> SELECT Amt,Comm FROM SALESPEOPLE JOIN CUSTOMERS using(Snum) JOIN ORDERS using(Snum) WHERE Rating>100;
++---------+------+
+| Amt     | Comm |
++---------+------+
+| 1713.23 | 0.10 |
+| 5160.45 | 0.13 |
+|   75.75 | 0.13 |
+| 1309.95 | 0.13 |
+| 5160.45 | 0.13 |
+|   75.75 | 0.13 |
+| 1309.95 | 0.13 |
+|   18.69 | 0.15 |
+| 1098.16 | 0.15 |
++---------+------+
+
+
